@@ -98,6 +98,9 @@ Cache.prototype.geth = async function(key, field) {
   }
 };
 
+/**
+ * Delete a key from the cache.
+ */
 Cache.prototype.del = function(key) {
   process.nextTick(async () => {
     try {
