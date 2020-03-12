@@ -26,7 +26,7 @@
   ],
   "author": "Milo Casagrande <milo@foundries.io>",
   "license": "Apache-2.0",
-  "dependencies": {
+  "peerDependencies": {
     "@foundriesio/redis-client": "^1.0.1"
   },
   "devDependencies": {
