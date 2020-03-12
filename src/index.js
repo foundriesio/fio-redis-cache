@@ -1,5 +1,3 @@
-import redisClient from '@foundriesio/redis-client';
-
 class Cache {
   constructor(client, log) {
     this.client = client;
@@ -113,25 +111,8 @@ Cache.prototype.del = function(key) {
 
 let cache;
 
-export function getCache(log, appState) {
-  const retryFunction = function(options) {
-    if (appState) {
-      appState.setBad();
-    }
-
-    log.warn('Retrying redis connection, attempt', options.attempt);
-
-    if (options.attempt >= 10) {
-      log.error('Too many redis db connection attempts');
-
-      return undefined;
-    }
-
-    return Math.min(options.attempt * 1000, 3000);
-  };
-
+export function getCache(client, log) {
   if (!cache) {
-    const client = redisClient(retryFunction, appState);
     cache = new Cache(client, log);
   }
 
