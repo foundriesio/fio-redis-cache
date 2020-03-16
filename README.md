@@ -5,7 +5,7 @@ It's based on the [@foundriesio/redis-client](https://www.npmjs.com/package/@fou
 ```JavaScript
 import redisCache from '@foundriesio/redis-cache';
 
-import redisClient from 'redis-client'; // Propvide a valid redis client
+import redisClient from 'redis-client'; // Provide a valid redis client
 import log from 'log'; // Provide a valid logger function
 
 return redisCache(redisClient, log);
