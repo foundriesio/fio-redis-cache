@@ -32,12 +32,12 @@
   },
   "devDependencies": {
     "clean-webpack-plugin": "^3.0.0",
-    "eslint": "^7.8.1",
+    "eslint": "^7.9.0",
     "eslint-plugin-promise": "^4.2.1",
     "eslint-plugin-security": "^1.4.0",
-    "prettier": "^2.1.1",
+    "prettier": "^2.1.2",
     "rimraf": "^3.0.2",
-    "webpack": "^4.44.1",
+    "webpack": "^4.44.2",
     "webpack-cli": "^3.3.12"
   },
   "repository": {
