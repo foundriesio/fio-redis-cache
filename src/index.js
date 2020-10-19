@@ -112,6 +112,41 @@ Cache.prototype.del = function(key) {
   });
 };
 
+/**
+ * Append the provided data to the list.
+ * @param {String} key - The name of the list to set data.
+ * @param {String,Buffer} data - The data to append to the list.
+ * @param {Number} [expiresIn=0] - Key expiration in seconds.
+ */
+Cache.prototype.rpush = function (key, data, expiresIn = 0) {
+  process.nextTick(async () => {
+    try {
+      await this.client.rpushAsync(key, data);
+      if (expiresIn > 0) {
+        await this.client.expireAsync(key, expiresIn);
+      }
+    } catch (err) {
+      this.log.error(`Error setting list data for key '${key}'`);
+      this.log.error(err);
+    }
+  });
+};
+
+/**
+ * Retrieve values from a list.
+ * @param {String} key - The key of the list to retrieve.
+ * @param {Number} [start=0] - The start index in the list.
+ * @param {Number} [stop=-1] - The stop index in the list.
+ */
+Cache.prototype.lrange = async function (key, start = 0, stop = -1) {
+  try {
+    return await this.client.lrangeAsync(key, start, stop);
+  } catch (err) {
+    this.log.error(`Error retrieving list for key '${key}'`);
+    this.log.error(err);
+  }
+};
+
 let cache;
 
 export function getCache(client, log) {
