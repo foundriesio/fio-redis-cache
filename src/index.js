@@ -134,6 +134,23 @@ Cache.prototype.rpush = function (key, data, expiresIn = 0) {
 };
 
 /**
+ * Trim a list so that it contains only a certain number of elements.
+ * @param {String} key - The name of the list to set data.
+ * @param {Number} start - The start index.
+ * @param {Number} stop - The end index.
+ */
+Cache.prototype.ltrim = function (key, start, stop) {
+  process.nextTick(async () => {
+    try {
+      await this.client.ltrimAsync(key, start, stop);
+    } catch (err) {
+      this.log.error(`Error trimming list data for key '${key}'`);
+      this.log.error(err);
+    }
+  });
+};
+
+/**
  * Retrieve values from a list.
  * @param {String} key - The key of the list to retrieve.
  * @param {Number} [start=0] - The start index in the list.
