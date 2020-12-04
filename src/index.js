@@ -9,7 +9,7 @@ class Cache {
  * Set some data into the cache.
  *
  * @param {String} key The key.
- * @param {(String, Array)} data The data to set.
+ * @param {String|Array} data The data to set.
  * @param {Number} expiresIn Time in second to expire the key.
  */
 Cache.prototype.set = function(key, data, expiresIn = 0) {
