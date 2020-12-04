@@ -35,7 +35,7 @@ Cache.prototype.set = function(key, data, expiresIn = 0) {
 Cache.prototype.seth = async function(key, data, expiresIn = 0) {
   process.nextTick(async () => {
     try {
-      await this.client.hmsetAsync(key, data);
+      await this.client.hsetAsync(key, ...Object.entries(data));
       if (expiresIn > 0) {
         await this.client.expireAsync(key, expiresIn);
       }
