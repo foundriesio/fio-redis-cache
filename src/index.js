@@ -121,9 +121,10 @@ Cache.prototype.del = function(key) {
 Cache.prototype.rpush = function (key, data, expiresIn = 0) {
   process.nextTick(async () => {
     try {
-      await this.client.rpushAsync(key, data);
       if (expiresIn > 0) {
-        await this.client.expireAsync(key, expiresIn);
+        await this.client.rpushAsync(key, data, 'EX', expiresIn);
+      } else {
+        await this.client.rpushAsync(key, data);
       }
     } catch (err) {
       this.log.error(`Error setting list data for key '${key}'`);
