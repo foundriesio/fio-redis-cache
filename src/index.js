@@ -11,19 +11,21 @@ class Cache {
  * @param {String} key The key.
  * @param {String|Array} data The data to set.
  * @param {Number} expiresIn Time in second to expire the key.
+ * @returns {Promise}
  */
-Cache.prototype.set = function(key, data, expiresIn = 0) {
-  process.nextTick(async () => {
-    try {
-      const st = await this.client.setnxAsync(key, data);
-      if (st === 1 && expiresIn > 0) {
-        await this.client.expireAsync(key, expiresIn);
-      }
-    } catch (err) {
-      this.log.error('Error setting cache with key', key);
-      this.log.error(err);
+Cache.prototype.set = async function(key, data, expiresIn = 0) {
+  try {
+    const st = await this.client.setnxAsync(key, data);
+    if (st === 1 && expiresIn > 0) {
+      await this.client.expireAsync(key, expiresIn);
     }
-  });
+    return st;
+  } catch (err) {
+    this.log.error('Error setting cache with key', key);
+    this.log.error(err);
+
+    return null;
+  }
 };
 
 /**
@@ -33,17 +35,18 @@ Cache.prototype.set = function(key, data, expiresIn = 0) {
  * @param {Object} data The data to set.
  */
 Cache.prototype.seth = async function(key, data, expiresIn = 0) {
-  process.nextTick(async () => {
-    try {
-      await this.client.hsetAsync(key, ...Object.entries(data));
-      if (expiresIn > 0) {
-        await this.client.expireAsync(key, expiresIn);
-      }
-    } catch (err) {
-      this.log.error('Error setting hash cache with key', key);
-      this.log.error(err);
+  try {
+    const st = await this.client.hsetAsync(key, ...Object.entries(data));
+    if (st > 0 && expiresIn > 0) {
+      await this.client.expireAsync(key, expiresIn);
     }
-  });
+    return st;
+  } catch (err) {
+    this.log.error('Error setting hash cache with key', key);
+    this.log.error(err);
+
+    return null;
+  }
 };
 
 /**
@@ -101,36 +104,33 @@ Cache.prototype.geth = async function(key, field) {
 /**
  * Delete a key from the cache.
  */
-Cache.prototype.del = function(key) {
-  process.nextTick(async () => {
-    try {
-      await this.client.delAsync(key);
-    } catch (err) {
-      this.log.error(`Error removing key ${key}`);
-      this.log.error(err);
-    }
-  });
+Cache.prototype.del = async function(key) {
+  try {
+    return await this.client.delAsync(key);
+  } catch (err) {
+    this.log.error(`Error removing key ${key}`);
+    this.log.error(err);
+  }
 };
 
 /**
  * Append the provided data to the list.
  * @param {String} key - The name of the list to set data.
- * @param {String,Buffer} data - The data to append to the list.
+ * @param {String|Buffer|Array} data - The data to append to the list.
  * @param {Number} [expiresIn=0] - Key expiration in seconds.
+ * @returns {Promise<Number>}
  */
-Cache.prototype.rpush = function (key, data, expiresIn = 0) {
-  process.nextTick(async () => {
-    try {
-      if (expiresIn > 0) {
-        await this.client.rpushAsync(key, data, 'EX', expiresIn);
-      } else {
-        await this.client.rpushAsync(key, data);
-      }
-    } catch (err) {
-      this.log.error(`Error setting list data for key '${key}'`);
-      this.log.error(err);
+Cache.prototype.rpush = async function (key, data, expiresIn = 0) {
+  try {
+    const st = await this.client.rpushAsync(key, data);
+    if (expiresIn > 0) {
+      await this.client.expireAsync(key, expiresIn);
     }
-  });
+    return st;
+  } catch (err) {
+    this.log.error(`Error appending list data for key '${key}'`);
+    this.log.error(err);
+  }
 };
 
 /**
@@ -138,16 +138,15 @@ Cache.prototype.rpush = function (key, data, expiresIn = 0) {
  * @param {String} key - The name of the list to set data.
  * @param {Number} start - The start index.
  * @param {Number} stop - The end index.
+ * @returns {Promise<Array>}
  */
-Cache.prototype.ltrim = function (key, start, stop) {
-  process.nextTick(async () => {
-    try {
-      await this.client.ltrimAsync(key, start, stop);
-    } catch (err) {
-      this.log.error(`Error trimming list data for key '${key}'`);
-      this.log.error(err);
-    }
-  });
+Cache.prototype.ltrim = async function (key, start, stop) {
+  try {
+    return await this.client.ltrimAsync(key, start, stop);
+  } catch (err) {
+    this.log.error(`Error trimming list data for key '${key}'`);
+    this.log.error(err);
+  }
 };
 
 /**
