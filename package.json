@@ -1,7 +1,7 @@
 {
   "name": "@foundriesio/redis-cache",
   "private": false,
-  "version": "2.0.0",
+  "version": "2.0.1",
   "description": "A redis-based cache",
   "type": "module",
   "main": "dist/main.js",
