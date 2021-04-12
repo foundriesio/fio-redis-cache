@@ -8,7 +8,6 @@ You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2
 
 const path = require('path');
 const webpack = require('webpack');
-const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 
 const { NODE_ENV } = process.env;
 const isProd = NODE_ENV === 'production';
@@ -35,8 +34,5 @@ module.exports = {
     new webpack.DefinePlugin({
       'process.browser': undefined
     }),
-    new CleanWebpackPlugin({
-      cleanStaleWebpackAssets: true
-    })
   ]
 };
