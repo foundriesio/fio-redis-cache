@@ -46,9 +46,6 @@
   ],
   "author": "Milo Casagrande <milo@foundries.io>",
   "license": "Apache-2.0",
-  "peerDependencies": {
-    "@foundriesio/redis-client": ">=2"
-  },
   "devDependencies": {
     "eslint": "^7.23.0",
     "eslint-plugin-promise": "^5.1.0",
@@ -67,5 +64,8 @@
   "bugs": {
     "url": "https://github.com/foundriesio/fio-redis-cache/issues"
   },
-  "homepage": "https://github.com/foundriesio/fio-redis-cache#readme"
+  "homepage": "https://github.com/foundriesio/fio-redis-cache#readme",
+  "peerDependencies": {
+    "@foundriesio/redis-client": "^2.0.9"
+  }
 }
