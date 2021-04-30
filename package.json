@@ -66,6 +66,6 @@
   },
   "homepage": "https://github.com/foundriesio/fio-redis-cache#readme",
   "dependencies": {
-    "@foundriesio/redis-client": "^2.0.10"
+    "@foundriesio/redis-client": "^2.0.11"
   }
 }
