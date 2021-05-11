@@ -65,7 +65,7 @@
     "url": "https://github.com/foundriesio/fio-redis-cache/issues"
   },
   "homepage": "https://github.com/foundriesio/fio-redis-cache#readme",
-  "dependencies": {
-    "@foundriesio/redis-client": "^2.0.12"
+  "peerDependencies": {
+    "@foundriesio/redis-client": "^2.0.13"
   }
 }
