@@ -21,7 +21,7 @@ Cache.prototype.set = async function (key, data, expiresIn = 0) {
     return await this.client.setAsync(key, data);
   } catch (err) {
     this.log.error('Error setting cache with key "%s"', key);
-    this.log.error({ err });
+    this.log.error(err);
 
     return void 0;
   }
@@ -43,7 +43,7 @@ Cache.prototype.seth = async function (key, data, expiresIn = 0) {
     return st;
   } catch (err) {
     this.log.error('Error setting hash cache with key "%s"', key);
-    this.log.error({ err });
+    this.log.error(err);
 
     return void 0;
   }
@@ -60,7 +60,7 @@ Cache.prototype.get = async function (key) {
     return await this.client.getAsync(key);
   } catch (err) {
     this.log.error('Error retrieving key "%s"', key);
-    this.log.error({ err });
+    this.log.error(err);
 
     return void 0;
   }
@@ -77,7 +77,7 @@ Cache.prototype.getallh = async function (key) {
     return await this.client.hgetallAsync(key);
   } catch (err) {
     this.log.error('Error retrieving hash "%s"', key);
-    this.log.error({ err });
+    this.log.error(err);
 
     return void 0;
   }
@@ -95,7 +95,7 @@ Cache.prototype.geth = async function (key, field) {
     return await this.client.hgetAsync(key, field);
   } catch (err) {
     this.log.error('Error retrieving field "%s" of "%s"', field, key);
-    this.log.error({ err });
+    this.log.error(err);
 
     return void 0;
   }
@@ -111,7 +111,7 @@ Cache.prototype.del = async function (key) {
     return await this.client.delAsync(key);
   } catch (err) {
     this.log.error('Error removing key "%s"', key);
-    this.log.error({ err });
+    this.log.error(err);
 
     return void 0;
   }
@@ -133,7 +133,7 @@ Cache.prototype.rpush = async function (key, data, expiresIn = 0) {
     return st;
   } catch (err) {
     this.log.error('Error appending list data for key "%s"', key);
-    this.log.error({ err });
+    this.log.error(err);
 
     return void 0;
   }
@@ -151,7 +151,7 @@ Cache.prototype.ltrim = async function (key, start, stop) {
     return await this.client.ltrimAsync(key, start, stop);
   } catch (err) {
     this.log.error('Error trimming list data for key "%s"', key);
-    this.log.error({ err });
+    this.log.error(err);
 
     return void 0;
   }
@@ -169,7 +169,7 @@ Cache.prototype.lrange = async function (key, start = 0, stop = -1) {
     return await this.client.lrangeAsync(key, start, stop);
   } catch (err) {
     this.log.error('Error retrieving list for key "%s"', key);
-    this.log.error({ err });
+    this.log.error(err);
 
     return void 0;
   }
